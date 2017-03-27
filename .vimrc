@@ -27,6 +27,45 @@ colorscheme desert
 "++++++++++++++++++++解决乱码问题+++++++++++++++++++
 set encoding=utf-8
 set termencoding=utf-8
-set fileencoding=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 
+"===================================================
+"
+"键盘命令
+"
+"===================================================
+set tags=tags,/usr/include/tags,~/.
+set cscopequickfix=s-,c-,d-,i-,t-,e-        "使用quickfix显示cscope的结果
+cs add ./cscope.out ./                      "添加cscope.out文件及其路径
+let mapleader="\<Space>"                    "将<Leader>键设置为空格
+"noremap \ <Space>                          "将缺省的Leader键映射为空格
+"在命令行模式和插入模式，<C-Z>可保存并退出
+map! <C-Z> <Esc>ZZ                          
+"将<C-A>快捷键映射为全选
+map <C-A> <Esc>ggVG$
 
+"选中状态下，Ctrl + c复制; Ctrl + v粘帖
+map <C-v> "+p
+map <C-c> "+y
+
+"Ctrl + a保存文件
+map <C-a> <Esc>:w<CR>
+
+" 查找C代码符号
+nmap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+" 查找本定义
+nmap <Leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+" 查找调用本函数的函数
+nmap <Leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+" 查找本字符串
+nmap <Leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+" 查找本egrep模式
+nmap <Leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+" 查找本文件
+nmap <Leader>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+" 查找包含本文件的文件
+nmap <Leader>i :cs find i ^<C-R>=expand("<cword>")<CR><CR>
+" 查找本函数调用的函数
+nmap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+" gd 在函数内部跳转（局部变量）
+nnoremap <C-]> g<C-]>
