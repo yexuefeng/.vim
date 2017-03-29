@@ -83,3 +83,7 @@ nmap <Leader>i :cs find i ^<C-R>=expand("<cword>")<CR><CR>
 nmap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 " gd 在函数内部跳转（局部变量）
 nnoremap <C-]> g<C-]>
+
+nmap <F5> :!find ./ -iname '*.c' -o -iname '*.cpp' -o iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
+          \:!cscope -b -i cscope.files -f cscope.out<CR>
+          \:cs reset<CR>

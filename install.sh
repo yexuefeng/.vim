@@ -6,7 +6,6 @@ mv -f ~/.vim ~/.vim_old
 cd ~/ && git clone https://github.com/yexuefeng/.vim.git
 mv -f ~/.vimrc ~/.vimrc_old
 mv -f ~/.vim/.vimrc ~/
-cp -f .vimrc ~/.vimrc
 CSCOPEPATH=`which cscope`
 sed -i "s%CSCOPE_PATH%$CSCOPEPATH%" ~/.vimrc
 echo "Finish!"
