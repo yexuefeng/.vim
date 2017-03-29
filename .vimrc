@@ -28,6 +28,20 @@ colorscheme desert
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"+++++++++++++++++++++cscope设置++++++++++++++++++++
+if has("cscope")
+    set csprg=CSCOPE_PATH
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+            cs add cscope.out
+    elseif $CSCOPE_DB != ""
+            cs add $CSOPE_DB
+    endif
+    set csverb
+endif
 
 "===================================================
 "
@@ -36,9 +50,9 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 "===================================================
 set tags=tags,/usr/include/tags,~/.
 set cscopequickfix=s-,c-,d-,i-,t-,e-        "使用quickfix显示cscope的结果
-cs add ./cscope.out ./                      "添加cscope.out文件及其路径
+"cs add cscope.out ./                      "添加cscope.out文件及其路径
 let mapleader="\<Space>"                    "将<Leader>键设置为空格
-"noremap \ <Space>                          "将缺省的Leader键映射为空格
+noremap \ <Space>                          
 "在命令行模式和插入模式，<C-Z>可保存并退出
 map! <C-Z> <Esc>ZZ                          
 "将<C-A>快捷键映射为全选
