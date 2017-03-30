@@ -85,5 +85,200 @@ nmap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 nnoremap <C-]> g<C-]>
 
 nmap <F5> :!find ./ -iname '*.c' -o -iname '*.cpp' -o iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
-          \:!cscope -b -i cscope.files -f cscope.out<CR>
+          \:!cscope -bR -i cscope.files -f cscope.out<CR>
           \:cs reset<CR>
+
+
+"##############################################################################
+"
+"插件
+"
+"##############################################################################
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+"Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" Valloric/YouCompleteMe BEGIN
+Plugin 'Valloric/YouCompleteMe'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_show_diagnostics_ui = 0
+" Valloric/YouCompleteMe END
+
+" tpope/vim-fugitive BEGIN
+" TODO 学习完git之后再来看这个插件的用途
+Plugin 'tpope/vim-fugitive'                 
+set statusline+=%{fugitive#statusline()}    " show Git hotness
+" tpope/vim-fugitive END
+
+" Yggdroot/indentLine BEGIN
+Plugin 'Yggdroot/indentLine'
+set t_Co=256
+let g:indentLine_char='┊'                 " this feature only works with files whose encoding is UTF-8
+" Yggdroot/indentLine END
+
+" L9 BEGIN
+" TODO 这个库有什么用途
+Plugin 'L9'          
+" L9 END
+
+" Auto-Pairs BEGIN
+" 和.操作有冲突，暂时屏蔽
+" Plugin 'Auto-Pairs'
+" Auto-Pairs END
+
+" EasyMotion BEGIN
+" 使用空格 + {w,f,F,b,e ...}
+Plugin 'EasyMotion'
+let g:EasyMotion_leader_key='<Space>'
+" EasyMotion END
+
+" FuzzyFinder BEGIN
+" TODO  文件查找, 功能很强大，具体有待研究???太久没人维护了，是否有其它替代插件
+"Plugin 'FuzzyFinder'
+" FuzzyFinder END
+
+" python-imports.vim BEGIN
+" TODO 暂时不用python
+" Plugin 'python-imports.vim'
+" python-imports.vim END
+
+" kien/ctrlp.vim BEGIN
+" 使用<C-p>调用CtrlP, 帮助条目:ctrlp-commands, ctrlp-extensions, ctrlp-mappings, ctrlp-options
+" Once CtrlP is open:
+"    Press <F5> to purge the cache for the current directory to get new files, remove deleted files and apply new ignore options.
+"    Press <c-f> and <c-b> to cycle between modes.
+"    Press <c-d> to switch to filename only search instead of full path.
+"    Press <c-r> to switch to regexp mode.
+"    Use <c-j>, <c-k> or the arrow keys to navigate the result list.
+"    Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
+"    Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
+"    Use <c-y> to create a new file and its parent directories.
+"    Use <c-z> to mark/unmark multiple files and <c-o> to open them.
+Plugin 'kien/ctrlp.vim'
+let g:ctrlp_working_path_mode = 'w'
+let g:ctrlp_by_filename = 1
+set wildignore+=*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif,*.o,*.ko,*.a,*.exe,*.dll,*.git,*.svn
+nmap <Leader>pb :CtrlPBuffer<CR>
+nmap <Leader>pp :CtrlP<CR>
+nmap <Leader>pm :CtrlPMRU<CR>
+" kien/ctrlp.vim END
+
+" majutsushi/tagbar BEGIN
+" TODO conflict with nerdtree and winmanager ??
+Plugin 'majutsushi/tagbar'
+let g:tagbar_width=35
+let g:tagbar_autofocus=0
+nmap <F6> :TagbarToggle<CR>
+" majutsushi/tagbar END
+
+" taglist.vim BEGIN
+" 使用:Tlist打开
+" Plugin 'taglist.vim'
+" let Tlist_Show_One_File=1
+" let Tlist_Exit_OnlyWindow=1
+" taglist.vim END
+
+" scrooloose/syntastic BEGIN
+" TODO 有时间可以看一下
+" Plugin 'scrooloose/syntastic'
+" let g:syntastic_python_checkers=['pylint']
+" let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+" scrooloose/syntastic END
+
+" scrooloose/nerdcommenter BEGIN
+" Vim plugin for intensely orgasmic commenting
+" usage:[count]<leader>c<space> |NERDComToggleComment|
+Plugin 'scrooloose/nerdcommenter'
+let g:NERDSpaceDelims = 1       " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1   " Use compact syntax for prettified multi-line comments
+let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDAltDelims_java = 1    " Set a language to use its alternate delimiters by default
+" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }   " Add your own custom formats or override the defaults
+let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1    " Enable trimming of trailing whitespace when uncommenting
+" scrooloose/nerdcommenter END
+
+" vim-airline/vim-airline BEGIN
+" lean & mean status/tabline for vim that's light as air
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+let g:airline_theme='molokai'                           " 配置主题：https://github.com/vim-airline/vim-airline/wiki/Screenshots
+let g:airline#extensions#tabline#enabled = 1            " Smarter tab line
+let g:airline#extensions#tabline#buffer_nr_show = 1     " 显示buffer的序号
+let g:airline_powerline_fonts = 1                       " 以下配置分隔符，需要安装powerline字体
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'                           
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+" vim-airline END
+
+" netrw.vim: 为自带插件
+" - 返回上级目录; c 切换vim 当前工作目录正在浏览的目录
+" d 创建目录; D 删除目录或文件
+" i 切换显示方式; R 文件或目录重命名
+" s 选择排序方式; x 定制浏览方式, 使用你指定的程序打开该文件
+
+" scrooloose/nerdtree BEGIN
+" TODO 因为直接从github上装的和tagbar冲突，所以直接用的NERD_tree.vim
+" nerdtree: A tree explorer plugin for vim???conflict with tagbar and winmanager
+" Plugin 'scrooloose/nerdtree'
+let NERDTreeIgnore=['.*\.pyc$','.*\.o$','.*\.ko$']  " 忽略.pyc .o .ko 结尾的文件
+" 列出当前目录文件
+nnoremap <silent> <F3> :NERDTreeToggle<CR>
+" autocmd vimenter * if !argc() | NERDTree | endif    "当打开vim且没有文件时自动打开NERDTree
+" 只剩 NERDTree时自动关闭
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" scrooloose/nerdtree END
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+" 常用的帮助命令: g; 
+" vimdiff, svndiff
