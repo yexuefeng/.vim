@@ -7,7 +7,7 @@ cd ~/ && git clone https://github.com/yexuefeng/.vim.git
 mv -f ~/.vimrc ~/.vimrc_old
 mv -f ~/.vim/.vimrc ~/
 CSCOPEPATH=`which cscope`
-sed -i "s%CSCOPE_PATH%$CSCOPEPATH%" ~/.vimrc
+sed -i "s%/usr/local/bin/cscope%$CSCOPEPATH%" ~/.vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "yexuefeng try hard to help you install bundle application" > yexuefeng
 echo "After installation finished, this script will exit" >> yexuefeng

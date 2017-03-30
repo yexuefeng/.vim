@@ -28,9 +28,19 @@ colorscheme desert
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"++++++++++++++++++++++文件类型+++++++++++++++++++++
+filetype on                     "检测文件类型
+filetype indent on              "为特定文件类型载入相关缩进文件
+
+au BufRead,BufNewFile *.{sh}   set filetype=sh
+au BufRead,BufNewFile *.{c}    set filetype=c
+au BufRead,BufNewFILE *.{py}   set filetype=python
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+au BufRead,BufNewFile *.{go}   set filetype=go
+au BufRead,BufNewFile *.{js}   set filetype=javascript
 "+++++++++++++++++++++cscope设置++++++++++++++++++++
 if has("cscope")
-    set csprg=CSCOPE_PATH
+    set csprg=/usr/local/bin/cscope
     set csto=1
     set cst
     set nocsverb
@@ -42,6 +52,62 @@ if has("cscope")
     endif
     set csverb
 endif
+
+
+"##############################################################################
+"
+"新建文件标题
+"
+"##############################################################################
+
+"新建.c,.h,.sh,.java文件，自动插入文件头 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+func SetTitle() 
+	if &filetype == 'sh' 
+		call setline(1,"\#!/bin/bash") 
+		call append(line("."), "") 
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# coding=utf-8")
+	    call append(line(".")+1, "") 
+
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+	    call append(line(".")+1, "")
+
+"    elseif &filetype == 'mkd'
+"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+	else 
+		call setline(1, "/*************************************************************************") 
+		call append(line("."), "	> File Name: ".expand("%:t")) 
+		call append(line(".")+1, "	> Author: ye xuefeng") 
+		call append(line(".")+2, "	> Mail: ") 
+		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
+		call append(line(".")+4, " ************************************************************************/") 
+		call append(line(".")+5, "")
+	endif
+	if expand("%:e") == 'cpp'
+		call append(line(".")+6, "#include<iostream>")
+		call append(line(".")+7, "using namespace std;")
+		call append(line(".")+8, "")
+	endif
+	if &filetype == 'c'
+		call append(line(".")+6, "#include<stdio.h>")
+		call append(line(".")+7, "")
+	endif
+	if expand("%:e") == 'h'
+		call append(line(".")+6, "#ifndef _".toupper(expand("%:t:r"))."_H")
+		call append(line(".")+7, "#define _".toupper(expand("%:t:r"))."_H")
+		call append(line(".")+8, "#endif")
+	endif
+	if &filetype == 'java'
+		call append(line(".")+6,"public class ".expand("%:r"))
+		call append(line(".")+7,"")
+	endif
+endfunc 
+"新建文件后，自动定位到文件末尾
+autocmd BufNewFile * normal G
 
 "===================================================
 "
@@ -88,6 +154,8 @@ nmap <F5> :!find ./ -iname '*.c' -o -iname '*.cpp' -o iname '*.h' -o -iname '*.h
           \:!cscope -bR -i cscope.files -f cscope.out<CR>
           \:cs reset<CR>
 
+
+noremap <F4> :Rgrep<CR><CR><CR>.[h,c]<CR><CR>
 
 "##############################################################################
 "
