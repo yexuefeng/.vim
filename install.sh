@@ -13,7 +13,7 @@ echo "yexuefeng try hard to help you install bundle application" > yexuefeng
 echo "After installation finished, this script will exit" >> yexuefeng
 echo "Please be paitent" >> yeuxuefeng
 echo "YouCompleteMe need extra settings:https://github.com/Valloric/YouCompleteMe" >> yexuefeng
-echo yexuefeng -c "PluginInstall" -c "q"
+vim yexuefeng -c "PluginInstall" -c "q" -c "q"
 rm -rf yexuefeng
 echo "Finish!"
      
