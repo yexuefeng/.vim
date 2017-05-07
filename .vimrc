@@ -350,3 +350,4 @@ filetype plugin indent on    " required
 
 " 常用的帮助命令: g; 
 " vimdiff, svndiff
+Plugin 'flazz/vim-colorschemes'
