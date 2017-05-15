@@ -94,7 +94,7 @@ func SetTitle()
 	endif
 	if expand("%:e") == 'cpp'
 		call append(line(".")+6, "#include <iostream>")
-		call append(line(".")+8, "")
+		call append(line(".")+7, "")
 	endif
 	if &filetype == 'c'
 		call append(line(".")+6, "#include <stdio.h>")
@@ -354,3 +354,4 @@ filetype plugin indent on    " required
 
 " 常用的帮助命令: g; 
 " vimdiff, svndiff
+Plugin 'flazz/vim-colorschemes'
