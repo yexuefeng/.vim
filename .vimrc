@@ -24,6 +24,11 @@ set hlsearch 			        "搜索时高亮显示被找到的文本
 "++++++++++++++++++++++配色与主题+++++++++++++++++++
 syntax on
 colorscheme desert
+"++++++++++++++++++++++折叠+++++++++++++++++++++++++
+set foldenable                "开启折叠
+set foldmethod=indent           "设置语法折叠
+set foldcolumn=0                 "设置折叠区域宽度
+set foldlevel=100               "设置折叠层数
 "++++++++++++++++++++解决乱码问题+++++++++++++++++++
 set encoding=utf-8
 set termencoding=utf-8
@@ -88,12 +93,11 @@ func SetTitle()
 		call append(line(".")+5, "")
 	endif
 	if expand("%:e") == 'cpp'
-		call append(line(".")+6, "#include<iostream>")
-		call append(line(".")+7, "using namespace std;")
+		call append(line(".")+6, "#include <iostream>")
 		call append(line(".")+8, "")
 	endif
 	if &filetype == 'c'
-		call append(line(".")+6, "#include<stdio.h>")
+		call append(line(".")+6, "#include <stdio.h>")
 		call append(line(".")+7, "")
 	endif
 	if expand("%:e") == 'h'
