@@ -26,7 +26,7 @@ syntax on
 colorscheme desert
 "++++++++++++++++++++++折叠+++++++++++++++++++++++++
 set foldenable                "开启折叠
-set foldmethod=indent           "设置语法折叠
+set foldmethod=syntax           "设置语法折叠
 set foldcolumn=0                 "设置折叠区域宽度
 set foldlevel=100               "设置折叠层数
 "++++++++++++++++++++解决乱码问题+++++++++++++++++++
