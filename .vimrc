@@ -43,6 +43,7 @@ au BufRead,BufNewFILE *.{py}   set filetype=python
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{js}   set filetype=javascript
+au BufRead,BufNewFile *.{log}  set filetype=log
 "+++++++++++++++++++++cscope设置++++++++++++++++++++
 if has("cscope")
     set csprg=/usr/local/bin/cscope
@@ -66,7 +67,7 @@ endif
 "##############################################################################
 
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.log,*.py exec ":call SetTitle()" 
 func SetTitle() 
 	if &filetype == 'sh' 
 		call setline(1,"\#!/bin/bash") 
@@ -79,10 +80,14 @@ func SetTitle()
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
         call append(line("."),"# encoding: utf-8")
-	    call append(line(".")+1, "")
-
-"    elseif &filetype == 'mkd'
-"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+	    call append(line(".")+1, "") 
+    elseif &filetype == 'log'
+		call setline(1, "/*************************************************************************") 
+		call append(line("."), "	> File Name: ".expand("%:t")) 
+		call append(line(".")+1, "	> Author: ye xuefeng") 
+		call append(line(".")+2, "	> Created Time: ".strftime("%c")) 
+		call append(line(".")+3, " ************************************************************************/") 
+		call append(line(".")+4, "")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%:t")) 
@@ -277,7 +282,18 @@ nmap <F6> :TagbarToggle<CR>
 
 " scrooloose/syntastic BEGIN
 " TODO 有时间可以看一下
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
+let g:syntastic_check_on_open = 1
+let g:syntastic_cpp_include_dirs = ['/usr/include/']
+let g:syntastic_cpp_remove_include_errors = 1
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libstdc++'
+"set error or warning signs
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+"whether to show balloons
+let g:syntastic_enable_balloons = 1
 " let g:syntastic_python_checkers=['pylint']
 " let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 " scrooloose/syntastic END
