@@ -161,7 +161,7 @@ nmap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 " gd 在函数内部跳转（局部变量）
 nnoremap <C-]> g<C-]>
 
-nmap <F5> :!ctags -R
+nmap <F5> :!ctags -R<CR><CR>
 
 
 noremap <F4> :Rgrep<CR><CR><CR>.[h,c]<CR><CR>
