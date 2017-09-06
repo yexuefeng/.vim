@@ -67,7 +67,7 @@ endif
 "##############################################################################
 
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.log,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.cc,*.[ch],*.sh,*.rb,*.java,*.log,*.py exec ":call SetTitle()" 
 func SetTitle() 
 	if &filetype == 'sh' 
 		call setline(1,"\#!/bin/bash") 
@@ -98,9 +98,11 @@ func SetTitle()
 		call append(line(".")+5, "")
 	endif
 	if expand("%:e") == 'cpp'
-		call append(line(".")+6, "#include <iostream>")
-		call append(line(".")+7, "")
+		call append(line(".")+6, "")
 	endif
+    if expand("%:e") == 'cc'
+        call append(line(".")+6, "")
+    endif
 	if &filetype == 'c'
 		call append(line(".")+6, "#include <stdio.h>")
 		call append(line(".")+7, "")
@@ -159,9 +161,7 @@ nmap <Leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 " gd 在函数内部跳转（局部变量）
 nnoremap <C-]> g<C-]>
 
-nmap <F5> :!find ./ -iname '*.c' -o -iname '*.cpp' -o iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
-          \:!cscope -bR -i cscope.files -f cscope.out<CR>
-          \:cs reset<CR>
+nmap <F5> :!ctags -R
 
 
 noremap <F4> :Rgrep<CR><CR><CR>.[h,c]<CR><CR>
@@ -324,13 +324,13 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'                           
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
+let g:airline_left_sep = '|'
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep = '|'
+let g:airline_right_alt_sep = '|'
+let g:airline_symbols.branch = '|'
+let g:airline_symbols.readonly = '|'
+let g:airline_symbols.linenr = '|'
 " vim-airline END
 
 " netrw.vim: 为自带插件
