@@ -40,10 +40,10 @@ filetype indent on              "为特定文件类型载入相关缩进文件
 au BufRead,BufNewFile *.{sh}   set filetype=sh
 au BufRead,BufNewFile *.{c}    set filetype=c
 au BufRead,BufNewFILE *.{py}   set filetype=python
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{js}   set filetype=javascript
 au BufRead,BufNewFile *.{log}  set filetype=log
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=markdown
 "+++++++++++++++++++++cscope设置++++++++++++++++++++
 if has("cscope")
     set csprg=/usr/local/bin/cscope
@@ -141,6 +141,34 @@ map <C-c> "+y
 
 "Ctrl + a保存文件
 map <C-a> <Esc>:w<CR>
+"Ctrl + q退出文件
+map <C-q> <Esc>:wq<CR>
+"只要按F8就可以调出相应的Web页面
+nnoremap <F8> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!gcc % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %< -std=c++11"
+        exec "!time ./%<"
+    elseif &filetype == 'java' 
+        exec "!javac %" 
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python2.7 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+        exec "!time go run %"
+    elseif &filetype == 'markdown'
+        exec 'MarkdownPreview'
+    endif
+endfunc
+
 
 " 查找C代码符号
 nmap <Leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -371,3 +399,20 @@ filetype plugin indent on    " required
 " 常用的帮助命令: g; 
 " vimdiff, svndiff
 Plugin 'flazz/vim-colorschemes'
+
+" vim-instant-markdown BEGIN
+" Instant Markdown previews from vim
+Plugin 'suan/vim-instant-markdown'
+let g:instant_markdown_autostart = 1
+" vim-instant-markdown END
+
+" markdown-preview.vim BEGIN
+" MarkdownPreview
+Plugin 'iamcco/markdown-preview.vim'
+let g:mkdp_path_to_chrome = "firefox"
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_open = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+" markdown-preview.vim END
