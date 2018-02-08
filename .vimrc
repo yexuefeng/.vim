@@ -46,7 +46,7 @@ au BufRead,BufNewFile *.{log}  set filetype=log
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=markdown
 "+++++++++++++++++++++cscope设置++++++++++++++++++++
 if has("cscope")
-    set csprg=/usr/local/bin/cscope
+    set csprg=/usr/bin/cscope
     set csto=1
     set cst
     set nocsverb
@@ -148,10 +148,10 @@ nnoremap <F8> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w"
     if &filetype == 'c'
-        exec "!gcc % -o %<"
+        exec "!gcc % -g -o %<"
         exec "!time ./%<"
     elseif &filetype == 'cpp'
-        exec "!g++ % -o %< -std=c++11"
+        exec "!g++ % -g -o %< -std=c++11"
         exec "!time ./%<"
     elseif &filetype == 'java' 
         exec "!javac %" 
