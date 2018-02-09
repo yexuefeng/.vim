@@ -43,6 +43,7 @@ au BufRead,BufNewFILE *.{py}   set filetype=python
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{js}   set filetype=javascript
 au BufRead,BufNewFile *.{log}  set filetype=log
+au BufRead,BufNewFile *.{cc}   set filetype=cc
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=markdown
 "+++++++++++++++++++++cscope设置++++++++++++++++++++
 if has("cscope")
@@ -76,7 +77,6 @@ func SetTitle()
         call setline(1,"#!/usr/bin/env python3")
         call append(line("."),"# -*- coding=utf-8 -*-")
 	    call append(line(".")+1, "") 
-
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
         call append(line("."),"# encoding: utf-8")
@@ -88,15 +88,32 @@ func SetTitle()
 		call append(line(".")+2, "	> Created Time: ".strftime("%c")) 
 		call append(line(".")+3, " ************************************************************************/") 
 		call append(line(".")+4, "")
-	else 
+    elseif &filetype == 'c' 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%:t")) 
 		call append(line(".")+1, "	> Author: ye xuefeng") 
-		call append(line(".")+2, "	> Mail: ") 
+		call append(line(".")+2, "	> Mail: yexuefeng_coder@outlook.com") 
+		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
+		call append(line(".")+4, " ************************************************************************/") 
+		call append(line(".")+5, "")
+    elseif &filetype == 'cc' 
+		call setline(1, "//*************************************************************************") 
+		call append(line("."), "//	> File Name: ".expand("%:t")) 
+		call append(line(".")+1, "//	> Author: ye xuefeng") 
+		call append(line(".")+2, "//	> Mail: yexuefeng_coder@outlook.com") 
+		call append(line(".")+3, "//	> Created Time: ".strftime("%c")) 
+		call append(line(".")+4, "// ************************************************************************") 
+		call append(line(".")+5, "")
+    else
+		call setline(1, "/*************************************************************************") 
+		call append(line("."), "	> File Name: ".expand("%:t")) 
+		call append(line(".")+1, "	> Author: ye xuefeng") 
+		call append(line(".")+2, "	> Mail: yexuefeng_coder@outlook.com") 
 		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
 		call append(line(".")+5, "")
 	endif
+
 	if expand("%:e") == 'cpp'
 		call append(line(".")+6, "")
 	endif
